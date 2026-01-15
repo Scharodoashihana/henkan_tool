@@ -30,7 +30,9 @@
 <h3>① Excel から貼り付け</h3>
 <textarea id="input" placeholder="ここに Excel から貼り付け"></textarea>
 
-<button id="convert">変換する</button>
+<button id="convert">カンマ区切りに変換</button>
+<button id="convertQuoted">カンマ区切り ＋ "" 付きに変換</button>
+<button id="clear">クリア</button>
 
 <h3>② 結果</h3>
 <textarea id="output" readonly placeholder="ここに結果が表示されます"></textarea>
@@ -54,6 +56,23 @@ document.getElementById("copy").addEventListener("click", function () {
     output.select();
     document.execCommand("copy");
 });
+
+document.getElementById("convertQuoted").addEventListener("click", function () {
+    const text = document.getElementById("input").value;
+
+    const converted = text
+        .trim()
+        .split(/\t+|\n+/)
+        .map(s => `"${s.trim()}"`)
+        .join(",");
+
+    document.getElementById("output").value = converted;
+});
+
+document.getElementById("clear").addEventListener("click",function(){
+    document.getElementById("input").value = "";
+    document.getElementById("output").value = "";
+})
 </script>
 
 </body>
